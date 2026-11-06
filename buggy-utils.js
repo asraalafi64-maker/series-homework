@@ -5,6 +5,13 @@ export const getEpisodeById = (season, idText) =>
 
 export const addEpisodeToFirstSeason = (show, episode) => {
   const firstSeason = show.seasons[0];
-  firstSeason.episodes.push(episode);
-  return { ...show };
+  const updatedFirstSeason = {
+    ...firstSeason,
+    episodes: [...firstSeason.episodes, episode]
+  };
+  const updatedSeasons = [updatedFirstSeason, ...show.seasons.slice(1)];
+  return {
+    ...show,
+    seasons: updatedSeasons
+  };
 };
