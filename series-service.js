@@ -48,3 +48,48 @@ export function getCreatorsFrom(series, country) {
 export function sortByStartYear(series) {
   return [...series].sort((a, b) => a.startYear - b.startYear);
 }
+
+// C1: משנה שם של סדרה לפי id
+export function renameSeries(series, id, newTitle) {
+  return series.map(show => {
+    if (show.id === id) {
+      return { ...show, title: newTitle };
+    }
+    return show;
+  });
+}
+
+// C2: מוסיפה עונה בסוף מערך העונות של סדרה
+export function addSeason(series, showId, season) {
+  return series.map(show => {
+    if (show.id === showId) {
+      return {
+        ...show,
+        seasons: [...show.seasons, season]
+      };
+    }
+    return show;
+  });
+}
+
+// C3: מוסיפה פרק בסוף העונה לפי seasonNumber (מספר העונה, לא האינדקס)
+export function addEpisode(series, showId, seasonNumber, episode) {
+  return series.map(show => {
+    if (show.id === showId) {
+      const updatedSeasons = show.seasons.map(season => {
+        if (season.number === seasonNumber) {
+          return {
+            ...season,
+            episodes: [...season.episodes, episode]
+          };
+        }
+        return season;
+      });
+      return {
+        ...show,
+        seasons: updatedSeasons
+      };
+    }
+    return show;
+  });
+}
